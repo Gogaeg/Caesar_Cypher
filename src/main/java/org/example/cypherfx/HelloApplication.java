@@ -46,8 +46,17 @@ public class HelloApplication extends Application {
         StringBuilder encrypted = new StringBuilder();
         for (char c : text.toCharArray()) {
             if (Character.isLetter(c)) {
-                char base = Character.isLowerCase(c) ? 'a' : 'A';
-                encrypted.append((char) ((c - base + 3) % 26 + base));
+                char base;
+                if (c >= 'а' && c <= 'я') {
+                    base = 'а';
+                    encrypted.append((char) ((c - base + 3) % 32 + base));
+                } else if (c >= 'А' && c <= 'Я') {
+                    base = 'А';
+                    encrypted.append((char) ((c - base + 3) % 32 + base));
+                } else {
+                    base = Character.isLowerCase(c) ? 'a' : 'A';
+                    encrypted.append((char) ((c - base + 3) % 26 + base));
+                }
             } else {
                 encrypted.append(c);
             }
@@ -59,8 +68,17 @@ public class HelloApplication extends Application {
         StringBuilder decrypted = new StringBuilder();
         for (char c : text.toCharArray()) {
             if (Character.isLetter(c)) {
-                char base = Character.isLowerCase(c) ? 'a' : 'A';
-                decrypted.append((char) ((c - base - 3 + 26) % 26 + base));
+                char base;
+                if (c >= 'а' && c <= 'я') {
+                    base = 'а';
+                    decrypted.append((char) ((c - base - 3 + 32) % 32 + base));
+                } else if (c >= 'А' && c <= 'Я') {
+                    base = 'А';
+                    decrypted.append((char) ((c - base - 3 + 32) % 32 + base));
+                } else {
+                    base = Character.isLowerCase(c) ? 'a' : 'A';
+                    decrypted.append((char) ((c - base - 3 + 26) % 26 + base));
+                }
             } else {
                 decrypted.append(c);
             }
